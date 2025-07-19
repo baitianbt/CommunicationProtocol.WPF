@@ -1,0 +1,374 @@
+<UserControl x:Class="CommunicationProtocol.WPF.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CommunicationProtocol.WPF.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="900">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- 头部区域 -->
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="工业通讯协议助手" 
+                       Style="{StaticResource MaterialDesignHeadline4TextBlock}" 
+                       Margin="0,0,0,16"/>
+            <TextBlock Text="欢迎使用工业通讯协议助手，您可以通过左侧菜单选择不同的通讯协议进行配置和调试。"
+                       Style="{StaticResource MaterialDesignBody1TextBlock}"
+                       TextWrapping="Wrap"
+                       Margin="0,0,0,32"/>
+        </StackPanel>
+
+        <!-- 功能卡片区域 -->
+        <TextBlock Grid.Row="1" Text="快速导航" 
+                   Style="{StaticResource MaterialDesignHeadline5TextBlock}" 
+                   Margin="0,0,0,16"/>
+
+        <WrapPanel Grid.Row="2" Orientation="Horizontal">
+            <!-- Modbus卡片 -->
+            <materialDesign:Card Width="280" Height="200" Margin="0,8,16,16" UniformCornerRadius="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="140" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    
+                    <!-- 卡片头部 -->
+                    <Border Grid.Row="0" Background="{DynamicResource PrimaryHueDarkBrush}">
+                        <DockPanel Margin="16">
+                            <materialDesign:PackIcon Kind="Ethernet" 
+                                                     Width="48" 
+                                                     Height="48" 
+                                                     VerticalAlignment="Top"
+                                                     Foreground="White"/>
+                            <StackPanel Margin="16,0,0,0">
+                                <TextBlock Text="Modbus 协议" 
+                                           Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                           Foreground="White"/>
+                                <TextBlock Text="支持 Modbus RTU/TCP 协议" 
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Foreground="White"
+                                           TextWrapping="Wrap"
+                                           Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                    
+                    <!-- 卡片底部按钮 -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="8,8,8,8">
+                        <Button Content="Modbus RTU" 
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                Command="{Binding NavigateCommand}" 
+                                CommandParameter="ModbusRtu" 
+                                Margin="4,0"/>
+                        <Button Content="Modbus TCP" 
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                Command="{Binding NavigateCommand}" 
+                                CommandParameter="ModbusTcp" 
+                                Margin="4,0"/>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:Card>
+
+            <!-- 西门子S7卡片 -->
+            <materialDesign:Card Width="280" Height="200" Margin="0,8,16,16" UniformCornerRadius="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="140" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    
+                    <!-- 卡片头部 -->
+                    <Border Grid.Row="0" Background="{DynamicResource SecondaryHueMidBrush}">
+                        <DockPanel Margin="16">
+                            <materialDesign:PackIcon Kind="Factory" 
+                                                     Width="48" 
+                                                     Height="48" 
+                                                     VerticalAlignment="Top"
+                                                     Foreground="White"/>
+                            <StackPanel Margin="16,0,0,0">
+                                <TextBlock Text="西门子S7协议" 
+                                           Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                           Foreground="White"/>
+                                <TextBlock Text="支持S7-200/300/400/1200/1500系列" 
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Foreground="White"
+                                           TextWrapping="Wrap"
+                                           Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                    
+                    <!-- 卡片底部按钮 -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="8,8,8,8">
+                        <Button Content="S7通讯" 
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                Command="{Binding NavigateCommand}" 
+                                CommandParameter="Siemens" 
+                                Margin="4,0"/>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:Card>
+
+            <!-- OPC UA卡片 -->
+            <materialDesign:Card Width="280" Height="200" Margin="0,8,16,16" UniformCornerRadius="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="140" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    
+                    <!-- 卡片头部 -->
+                    <Border Grid.Row="0" Background="{DynamicResource PrimaryHueMidBrush}">
+                        <DockPanel Margin="16">
+                            <materialDesign:PackIcon Kind="ServerNetwork" 
+                                                     Width="48" 
+                                                     Height="48" 
+                                                     VerticalAlignment="Top"
+                                                     Foreground="White"/>
+                            <StackPanel Margin="16,0,0,0">
+                                <TextBlock Text="OPC UA" 
+                                           Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                           Foreground="White"/>
+                                <TextBlock Text="支持OPC UA客户端功能" 
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Foreground="White"
+                                           TextWrapping="Wrap"
+                                           Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                    
+                    <!-- 卡片底部按钮 -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="8,8,8,8">
+                        <Button Content="OPC UA客户端" 
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                Command="{Binding NavigateCommand}" 
+                                CommandParameter="OpcUa" 
+                                Margin="4,0"/>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:Card>
+            <!-- EtherNet/IP卡片 -->
+            <materialDesign:Card Width="280"
+                                 Height="200"
+                                 Margin="0,8,16,16"
+                                 UniformCornerRadius="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="140" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- 卡片头部 -->
+                    <Border Grid.Row="0"
+                            Background="{DynamicResource PrimaryHueDarkBrush}">
+                        <DockPanel Margin="16">
+                            <materialDesign:PackIcon Kind="Ethernet"
+                                                     Width="48"
+                                                     Height="48"
+                                                     VerticalAlignment="Top"
+                                                     Foreground="White" />
+                            <StackPanel Margin="16,0,0,0">
+                                <TextBlock Text="EtherNet/IP协议"
+                                           Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                           Foreground="White" />
+                                <TextBlock Text="支持Allen-Bradley/罗克韦尔自动化设备"
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Foreground="White"
+                                           TextWrapping="Wrap"
+                                           Margin="0,4,0,0" />
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+
+                    <!-- 卡片底部按钮 -->
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Margin="8,8,8,8">
+                        <Button Content="EtherNet/IP"
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                Command="{Binding NavigateCommand}"
+                                CommandParameter="EtherNetIP"
+                                Margin="4,0" />
+                    </StackPanel>
+                </Grid>
+            </materialDesign:Card>
+
+            <!-- 三菱MC卡片 -->
+            <materialDesign:Card Width="280"
+                                 Height="200"
+                                 Margin="0,8,16,16"
+                                 UniformCornerRadius="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="140" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- 卡片头部 -->
+                    <Border Grid.Row="0"
+                            Background="{DynamicResource SecondaryHueLightBrush}">
+                        <DockPanel Margin="16">
+                            <materialDesign:PackIcon Kind="Factory"
+                                                     Width="48"
+                                                     Height="48"
+                                                     VerticalAlignment="Top"
+                                                     Foreground="White" />
+                            <StackPanel Margin="16,0,0,0">
+                                <TextBlock Text="三菱MC协议"
+                                           Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                           Foreground="White" />
+                                <TextBlock Text="支持Q/L/QnA/iQ-R/FX系列PLC"
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Foreground="White"
+                                           TextWrapping="Wrap"
+                                           Margin="0,4,0,0" />
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+
+                    <!-- 卡片底部按钮 -->
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Margin="8,8,8,8">
+                        <Button Content="MC协议"
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                Command="{Binding NavigateCommand}"
+                                CommandParameter="Mitsubishi"
+                                Margin="4,0" />
+                    </StackPanel>
+                </Grid>
+            </materialDesign:Card>
+            
+            <!-- 串口通信卡片 -->
+            <materialDesign:Card Width="280" Height="200" Margin="0,8,16,16" UniformCornerRadius="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="140" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    
+                    <!-- 卡片头部 -->
+                    <Border Grid.Row="0" Background="{DynamicResource PrimaryHueLightBrush}">
+                        <DockPanel Margin="16">
+                            <materialDesign:PackIcon Kind="SerialPort" 
+                                                     Width="48" 
+                                                     Height="48" 
+                                                     VerticalAlignment="Top"
+                                                     Foreground="White"/>
+                            <StackPanel Margin="16,0,0,0">
+                                <TextBlock Text="串口通信" 
+                                           Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                           Foreground="White"/>
+                                <TextBlock Text="配置和调试串口通信" 
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Foreground="White"
+                                           TextWrapping="Wrap"
+                                           Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                    
+                    <!-- 卡片底部按钮 -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="8,8,8,8">
+                        <Button Content="串口通信" 
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                Command="{Binding NavigateCommand}" 
+                                CommandParameter="SerialPort" 
+                                Margin="4,0"/>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:Card>
+            
+            <!-- TCP通信卡片 -->
+            <materialDesign:Card Width="280" Height="200" Margin="0,8,16,16" UniformCornerRadius="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="140" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    
+                    <!-- 卡片头部 -->
+                    <Border Grid.Row="0" Background="{DynamicResource SecondaryHueDarkBrush}">
+                        <DockPanel Margin="16">
+                            <materialDesign:PackIcon Kind="Lan" 
+                                                     Width="48" 
+                                                     Height="48" 
+                                                     VerticalAlignment="Top"
+                                                     Foreground="White"/>
+                            <StackPanel Margin="16,0,0,0">
+                                <TextBlock Text="TCP通信" 
+                                           Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                           Foreground="White"/>
+                                <TextBlock Text="配置TCP服务器/客户端通信" 
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Foreground="White"
+                                           TextWrapping="Wrap"
+                                           Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                    
+                    <!-- 卡片底部按钮 -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="8,8,8,8">
+                        <Button Content="TCP通信" 
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                Command="{Binding NavigateCommand}" 
+                                CommandParameter="Tcp" 
+                                Margin="4,0"/>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:Card>
+            
+            <!-- 系统设置卡片 -->
+            <materialDesign:Card Width="280" Height="200" Margin="0,8,16,16" UniformCornerRadius="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="140" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    
+                    <!-- 卡片头部 -->
+                    <Border Grid.Row="0" Background="{DynamicResource MaterialDesignDarkBackground}">
+                        <DockPanel Margin="16">
+                            <materialDesign:PackIcon Kind="Cog" 
+                                                     Width="48" 
+                                                     Height="48" 
+                                                     VerticalAlignment="Top"
+                                                     Foreground="White"/>
+                            <StackPanel Margin="16,0,0,0">
+                                <TextBlock Text="系统设置" 
+                                           Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                           Foreground="White"/>
+                                <TextBlock Text="配置应用参数和日志设置" 
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Foreground="White"
+                                           TextWrapping="Wrap"
+                                           Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                    
+                    <!-- 卡片底部按钮 -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="8,8,8,8">
+                        <Button Content="系统设置" 
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                Command="{Binding NavigateCommand}" 
+                                CommandParameter="Settings" 
+                                Margin="4,0"/>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:Card>
+        </WrapPanel>
+    </Grid>
+</UserControl> 

@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+   
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
+    <PackageReference Include="Prism.Core" Version="8.1.97" />
+    <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
+    <PackageReference Include="Prism.Wpf" Version="8.1.97" />
+    <PackageReference Include="NLog" Version="5.2.7" />
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="S7NetPlus" Version="0.20.0" />
+    <PackageReference Include="NModbus" Version="3.0.78" />
+    <PackageReference Include="OPCFoundation.NetStandard.Opc.Ua" Version="1.4.372.56" />
+    <PackageReference Include="System.IO.Ports" Version="9.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Protocols\" />
+    <Folder Include="Models\Configuration\" />
+    <Folder Include="Resources\Images\" />
+    <Folder Include="Services\ProtocolServices\" />
+    <Folder Include="Services\ConfigurationService\" />
+    <Folder Include="Services\LoggingService\" />
+    <Folder Include="Utils\Converters\" />
+    <Folder Include="Utils\Helpers\" />
+    <Folder Include="Views\ProtocolViews\" />
+    <Folder Include="Views\ConfigurationViews\" />
+    <Folder Include="Views\MonitorViews\" />
+    <Folder Include="Resources\Styles\" />
+    <Folder Include="Resources\Templates\" />
+  </ItemGroup>
+
+</Project> 

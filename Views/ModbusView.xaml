@@ -1,0 +1,289 @@
+<UserControl x:Class="CommunicationProtocol.WPF.Views.ModbusView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CommunicationProtocol.WPF.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="900">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- 标题区域 -->
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Modbus 协议" Style="{StaticResource MaterialDesignHeadline4TextBlock}" Margin="0,0,0,16"/>
+            <TextBlock Text="配置Modbus通讯参数并执行读写操作" 
+                       Style="{StaticResource MaterialDesignBody1TextBlock}"
+                       TextWrapping="Wrap"
+                       Margin="0,0,0,16"/>
+        </StackPanel>
+        
+        <!-- 主内容区域 -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="350"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- 配置面板 -->
+            <materialDesign:Card Grid.Column="0" Margin="0,0,8,0" UniformCornerRadius="4">
+                <Grid Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- 通讯方式选择 -->
+                    <TextBlock Grid.Row="0" Text="通讯类型" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Margin="0,0,0,8"/>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,16">
+                        <RadioButton Content="Modbus RTU" 
+                                     IsChecked="{Binding IsRtu}" 
+                                     Margin="0,0,16,0"
+                                     Style="{StaticResource MaterialDesignRadioButton}"/>
+                        <RadioButton Content="Modbus TCP" 
+                                     IsChecked="{Binding IsTcp}" 
+                                     Style="{StaticResource MaterialDesignRadioButton}"/>
+                    </StackPanel>
+                    
+                    <!-- RTU参数配置 -->
+                    <StackPanel Grid.Row="2" Visibility="{Binding RtuParametersVisibility}">
+                        <TextBlock Text="RTU参数" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Margin="0,0,0,8"/>
+                        
+                        <TextBlock Text="串口号" Margin="0,8,0,4"/>
+                        <ComboBox ItemsSource="{Binding PortNames}" 
+                                  SelectedValue="{Binding PortName}"
+                                  materialDesign:HintAssist.Hint="选择串口" 
+                                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                  Margin="0,0,0,8"/>
+                        
+                        <TextBlock Text="波特率" Margin="0,8,0,4"/>
+                        <ComboBox ItemsSource="{Binding BaudRates}" 
+                                  SelectedValue="{Binding BaudRate}"
+                                  materialDesign:HintAssist.Hint="选择波特率" 
+                                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                  Margin="0,0,0,8"/>
+                        
+                        <TextBlock Text="数据位" Margin="0,8,0,4"/>
+                        <ComboBox ItemsSource="{Binding DataBits}" 
+                                  SelectedValue="{Binding DataBit}"
+                                  materialDesign:HintAssist.Hint="选择数据位" 
+                                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                  Margin="0,0,0,8"/>
+                        
+                        <TextBlock Text="停止位" Margin="0,8,0,4"/>
+                        <ComboBox ItemsSource="{Binding StopBits}" 
+                                  SelectedValue="{Binding StopBit}"
+                                  materialDesign:HintAssist.Hint="选择停止位" 
+                                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                  Margin="0,0,0,8"/>
+                        
+                        <TextBlock Text="校验方式" Margin="0,8,0,4"/>
+                        <ComboBox ItemsSource="{Binding ParityBits}" 
+                                  SelectedValue="{Binding ParityBit}"
+                                  materialDesign:HintAssist.Hint="选择校验方式" 
+                                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                  Margin="0,0,0,8"/>
+                    </StackPanel>
+                    
+                    <!-- TCP参数配置 -->
+                    <StackPanel Grid.Row="3" Visibility="{Binding TcpParametersVisibility}">
+                        <TextBlock Text="TCP参数" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Margin="0,0,0,8"/>
+                        
+                        <TextBlock Text="IP地址" Margin="0,8,0,4"/>
+                        <TextBox Text="{Binding IpAddress}" 
+                                 materialDesign:HintAssist.Hint="输入IP地址" 
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="0,0,0,8"/>
+                        
+                        <TextBlock Text="端口" Margin="0,8,0,4"/>
+                        <TextBox Text="{Binding Port}" 
+                                 materialDesign:HintAssist.Hint="输入端口号" 
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="0,0,0,8"/>
+                    </StackPanel>
+                    
+                    <!-- 公共参数配置 -->
+                    <StackPanel Grid.Row="4">
+                        <TextBlock Text="设备参数" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Margin="0,16,0,8"/>
+                        
+                        <TextBlock Text="从站地址" Margin="0,8,0,4"/>
+                        <TextBox Text="{Binding SlaveId}" 
+                                 materialDesign:HintAssist.Hint="输入从站地址(1-247)" 
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="0,0,0,8"/>
+                        
+                        <TextBlock Text="超时时间(ms)" Margin="0,8,0,4"/>
+                        <TextBox Text="{Binding Timeout}" 
+                                 materialDesign:HintAssist.Hint="输入超时时间" 
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="0,0,0,8"/>
+                    </StackPanel>
+                    
+                    <!-- 连接状态 -->
+                    <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="0,16,0,16">
+                        <TextBlock Text="连接状态: " VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding ConnectionStatus}" 
+                                   Style="{Binding ConnectionStatusStyle}"
+                                   VerticalAlignment="Center"
+                                   Margin="8,0,0,0"/>
+                    </StackPanel>
+                    
+                    <!-- 操作按钮 -->
+                    <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="连接" 
+                                Command="{Binding ConnectCommand}"
+                                Visibility="{Binding ConnectButtonVisibility}"
+                                Style="{StaticResource ConnectButtonStyle}"/>
+                        <Button Content="断开" 
+                                Command="{Binding DisconnectCommand}"
+                                Visibility="{Binding DisconnectButtonVisibility}"
+                                Style="{StaticResource DisconnectButtonStyle}"/>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:Card>
+            
+            <!-- 操作面板 -->
+            <Grid Grid.Column="1" Margin="8,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="300"/>
+                </Grid.RowDefinitions>
+                
+                <!-- 读写操作面板 -->
+                <materialDesign:Card Grid.Row="0" Margin="0,0,0,8" UniformCornerRadius="4">
+                    <Grid Margin="16">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Grid.Row="0" Text="数据操作" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Margin="0,0,0,16"/>
+                        
+                        <!-- 功能码选择 -->
+                        <StackPanel Grid.Row="1">
+                            <TextBlock Text="功能码" Margin="0,0,0,4"/>
+                            <ComboBox ItemsSource="{Binding FunctionCodes}" 
+                                      SelectedValue="{Binding SelectedFunctionCode}"
+                                      DisplayMemberPath="Display" 
+                                      SelectedValuePath="Value"
+                                      materialDesign:HintAssist.Hint="选择功能码" 
+                                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                      Margin="0,0,0,8"/>
+                        </StackPanel>
+                        
+                        <!-- 地址配置 -->
+                        <Grid Grid.Row="2" Margin="0,8,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                                <TextBlock Text="起始地址" Margin="0,0,0,4"/>
+                                <TextBox Text="{Binding StartAddress}" 
+                                         materialDesign:HintAssist.Hint="起始地址" 
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Column="1" Margin="8,0,8,0">
+                                <TextBlock Text="数量" Margin="0,0,0,4"/>
+                                <TextBox Text="{Binding Quantity}" 
+                                         materialDesign:HintAssist.Hint="读取数量" 
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Column="2" Margin="8,0,0,0">
+                                <TextBlock Text="数据类型" Margin="0,0,0,4"/>
+                                <ComboBox ItemsSource="{Binding DataTypes}" 
+                                          SelectedValue="{Binding SelectedDataType}"
+                                          materialDesign:HintAssist.Hint="选择数据类型" 
+                                          Style="{StaticResource MaterialDesignOutlinedComboBox}"/>
+                            </StackPanel>
+                        </Grid>
+                        
+                        <!-- 数据输入/显示 -->
+                        <Grid Grid.Row="3" Margin="0,8,0,8">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            
+                            <TextBlock Grid.Row="0" Text="数据值" Margin="0,0,0,4"/>
+                            <TextBox Grid.Row="1" 
+                                     Text="{Binding DataValue}" 
+                                     IsReadOnly="{Binding IsReadOperation}"
+                                     AcceptsReturn="True" 
+                                     TextWrapping="Wrap"
+                                     VerticalScrollBarVisibility="Auto"
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                        </Grid>
+                        
+                        <!-- 操作按钮 -->
+                        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Content="读取" 
+                                    Command="{Binding ReadCommand}"
+                                    IsEnabled="{Binding IsConnected}"
+                                    Style="{StaticResource PrimaryButtonStyle}"/>
+                            <Button Content="写入" 
+                                    Command="{Binding WriteCommand}"
+                                    IsEnabled="{Binding CanWrite}"
+                                    Style="{StaticResource SendButtonStyle}"/>
+                        </StackPanel>
+                    </Grid>
+                </materialDesign:Card>
+                
+                <!-- 通讯日志面板 -->
+                <materialDesign:Card Grid.Row="1" Margin="0,8,0,0" UniformCornerRadius="4">
+                    <Grid Margin="16">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <DockPanel Grid.Row="0">
+                            <TextBlock DockPanel.Dock="Left" Text="通讯日志" Style="{StaticResource MaterialDesignSubtitle1TextBlock}"/>
+                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
+                                <CheckBox Content="自动滚动" IsChecked="{Binding AutoScroll}" Margin="0,0,16,0"/>
+                                <CheckBox Content="显示时间戳" IsChecked="{Binding ShowTimestamp}" Margin="0,0,16,0"/>
+                                <CheckBox Content="显示发送/接收" IsChecked="{Binding ShowDirection}" Margin="0,0,16,0"/>
+                            </StackPanel>
+                        </DockPanel>
+                        
+                        <TextBox Grid.Row="1" 
+                                 Text="{Binding LogContent, Mode=OneWay}" 
+                                 IsReadOnly="True" 
+                                 TextWrapping="Wrap" 
+                                 VerticalScrollBarVisibility="Auto"
+                                 FontFamily="Consolas"
+                                 Margin="0,8,0,0"/>
+                        
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+                            <Button Content="保存日志" 
+                                    Command="{Binding SaveLogCommand}"
+                                    Style="{StaticResource SecondaryButtonStyle}"/>
+                            <Button Content="清空日志" 
+                                    Command="{Binding ClearLogCommand}"
+                                    Style="{StaticResource SecondaryButtonStyle}"/>
+                        </StackPanel>
+                    </Grid>
+                </materialDesign:Card>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl> 
